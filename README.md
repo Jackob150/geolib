@@ -1,0 +1,2 @@
+# geolib
+Analytical geometry library
