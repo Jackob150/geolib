@@ -1,0 +1,3 @@
+[console_scripts]
+geolib_test = tests.test:test
+

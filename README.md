@@ -1,2 +1,2 @@
 # geolib
-Analytical geometry library
+Analytical geometry library for educational purposes
