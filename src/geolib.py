@@ -1,5 +1,7 @@
 import math
 
+from numpy import isin
+
 class Point:
     def __init__(self, x: float, y: float):
         self.x = x
@@ -14,13 +16,23 @@ class Point:
         return None
 
     def get_dist_from_line(self, line):
-        if isinstance(point, Line):
+        if isinstance(line, Line):
             return abs(line.A * self.x + line.B * self.y + line.C) / math.sqrt(line.A * line.A + line.B * line.B)
         return None
 
     def move_by_vector(self, vec):
-        self.x += vec.x
-        self.y += vec.y
+        if isinstance(vec, Vector):
+            self.x += vec.x
+            self.y += vec.y
+
+    def get_moved_by_vector(self, vec):
+        pass
+
+    def rotate_around_point(self, center, angle: float):
+        pass
+
+    def get_rotated_around_point(self, center, angle: float):
+        pass
 
 class Vector:
     def __init__(self, x: float, y: float):
@@ -94,6 +106,12 @@ class Vector:
             return math.acos(self.get_scalar_product(vec) / (self.get_length() * vec.get_length()))
         return None
 
+    def rotate_by_angle(self, angle: float):
+        pass
+
+    def get_rotated_by_angle(self, angle: float):
+        pass
+
 class Line:
     def __init__(self, A: float, B: float, C: float):
         if A * A + B * B:
@@ -162,6 +180,12 @@ class Line:
         if not self.A * line.B - self.B - line.A:
             return abs(line.C * self.A / line.A - self.C) / (self.A * self.A + self.B * self.B)
         return 0
+
+    def rotate_by_angle(self, angle: float):
+        pass
+
+    def get_rotated_by_angle(self, angle: float):
+        pass
 
 class LineSegment:
     def __init__(self, point_a: Point, point_b: Point):
@@ -233,8 +257,15 @@ class Triangle(PolygonChain):
     def get_area(self):
         return self.v.get_length() * self.w.get_length() * math.sin(self.alpha) / 2
 
+    def get_heights(self):
+        e_lines = [Line.two_points_line(self.points[1], self.points[2]),
+                 Line.two_points_line(self.points[0], self.points[2]),
+                 Line.two_points_line(self.points[0], self.points[1])]
+        h_points = [e_line.get_perp_line(i).get_line_intersection(e_line) for i, e_line in enumerate(e_lines)]
+        return [LineSegment(self.points[i], h_point) for i, h_point in enumerate(h_points)]
+
     def get_orthocenter(self):
-        pass
+        return self.get_heights()[0].get_segment_line().get_line_intersection(self.get_heights()[1].get_segment_line())
 
     def get_inner_circle(self):
         pass
@@ -258,6 +289,9 @@ class Triangle(PolygonChain):
             c = self.__class__(self.points[1], self.points[2], point).get_area() / self.get_area()
             return a, b, c
         return None
+
+    def get_barycentric_point(self, a: float, b: float, c: float):
+        pass
 
 class Circle:
     def __init__(self, radius: float, center: Point):
@@ -285,3 +319,6 @@ class Circle:
 
     def get_tangent_line(self, point: Point):
         return LineSegment(self.center, point).get_segment_line().get_perp_line(point)
+
+    def get_chord(self, line: Line):
+        pass
