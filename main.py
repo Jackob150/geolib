@@ -1,7 +1,7 @@
 from src.geolib import *
 from utils.angles import *
 
-def test():
+def main():
     p = Point(0,0)
     q = Point(0,2)
     r = Point(3,0)
@@ -13,4 +13,4 @@ def test():
     print(tr.get_barycentric_coords(b))
 
 if __name__ == "__main__":
-    test()
+    main()

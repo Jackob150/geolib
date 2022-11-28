@@ -1,7 +1,5 @@
 import math
 
-from numpy import isin
-
 class Point:
     def __init__(self, x: float, y: float):
         self.x = x

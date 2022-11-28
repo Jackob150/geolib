@@ -8,6 +8,8 @@ setup(
     author_email='jackob150@gmail.com',
     packages=find_packages(include=['src', 'src.*', 'utils', 'utils.*']),
     entry_points={
-        'console_scripts': ['geolib_test=tests.test:test']
-    }
+        'console_scripts': ['geolib=main:main']
+    },
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest']
 )

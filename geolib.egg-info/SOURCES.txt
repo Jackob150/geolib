@@ -1,4 +1,5 @@
 README.md
+setup.cfg
 setup.py
 geolib.egg-info/PKG-INFO
 geolib.egg-info/SOURCES.txt
