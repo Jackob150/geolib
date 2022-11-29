@@ -75,6 +75,11 @@ class Vector:
     def __str__(self):
         return f"[{self.x} , {self.y}]"
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return abs(self.x - other.x) < epsilon and (self.y - other.y) < epsilon
+        return False
+
     @classmethod
     def two_points_vector(cls, point_a: Point, point_b: Point):
         return cls(point_b.x - point_a.x, point_b.y - point_a.y)

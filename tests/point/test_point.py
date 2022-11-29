@@ -2,7 +2,9 @@ from utils.test_utils import get_point_from_input
 from utils.test_utils import get_vector_from_input
 from utils.test_utils import get_line_from_input
 from utils.test_utils import get_float_from_input
-from tests.cases import *
+from tests.point.cases import *
+
+from src.geolib import *
 
 import pytest
 
