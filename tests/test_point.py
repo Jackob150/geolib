@@ -1,6 +1,3 @@
-from src.geolib import Point
-from src.geolib import Line
-from src.geolib import Vector
 from utils.test_utils import get_point_from_input
 from utils.test_utils import get_vector_from_input
 from utils.test_utils import get_line_from_input
@@ -48,3 +45,18 @@ def test_get_rotated_around_origin(input, result):
     p = get_point_from_input(input, 0)
     alpha = get_float_from_input(input, 1)
     assert p.get_rotated_around_origin(alpha) == get_point_from_input(result, 0)
+
+@pytest.mark.parametrize("input, result", rotate_around_point_cases)
+def test_rotate_around_point(input, result):
+    p = get_point_from_input(input, 0)
+    q = get_point_from_input(input, 1)
+    alpha = get_float_from_input(input, 2)
+    p.rotate_around_point(q, alpha)
+    assert p == get_point_from_input(result, 0)
+
+@pytest.mark.parametrize("input, result", get_rotated_around_point_cases)
+def test_get_rotated_around_point(input, result):
+    p = get_point_from_input(input, 0)
+    q = get_point_from_input(input, 1)
+    alpha = get_float_from_input(input, 2)
+    assert p.get_rotated_around_point(q, alpha) == get_point_from_input(result, 0)
