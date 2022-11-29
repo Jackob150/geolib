@@ -1,5 +1,7 @@
 import math
 
+from src.constans import epsilon
+
 class Point:
     def __init__(self, x: float, y: float):
         self.x = x
@@ -7,6 +9,11 @@ class Point:
 
     def __str__(self):
         return f"({self.x} , {self.y})"
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return abs(self.x - other.x) < epsilon and (self.y - other.y) < epsilon
+        return False
 
     def get_dist_from_point(self, point):
         if isinstance(point, self.__class__):
@@ -30,12 +37,14 @@ class Point:
         return Point(self.x + vec.x, self.y + vec.y)
 
     def rotate_around_origin(self, angle: float):
-        vec = Vector(self.x, self.y).rotate_by_angle(angle)
+        vec = Vector(self.x, self.y)
+        vec.rotate_by_angle(angle)
         self.x = vec.x
         self.y = vec.y
 
     def get_rotated_around_origin(self, angle):
-        vec = Vector(self.x, self.y).rotate_by_angle(angle)
+        vec = Vector(self.x, self.y)
+        vec.rotate_by_angle(angle)
         return Point(vec.x, vec.y)
 
     def rotate_around_point(self, center, angle: float):
