@@ -1,6 +1,7 @@
 import math
 
 from src.constans import epsilon
+from src.exceptions import ZeroLengthVectorNormalized
 
 class Point:
     def __init__(self, x: float, y: float):
@@ -94,14 +95,20 @@ class Vector:
         return math.sqrt(self.x * self.x + self.y * self.y)
     
     def normalize(self):
-        if length := self.get_length():
+        try:
+            length = self.get_length()
             self.x /= length
             self.y /= length
+        except:
+            raise ZeroLengthVectorNormalized()
+
 
     def get_normalized(self):
-        return self.__class__(self.x / self.get_length(), self.y / self.get_length())
+        if length := self.get_length():
+            return self.__class__(self.x / length, self.y / length)
+        return None
 
-    def move_point(self, point: Point):
+    def get_moved_point(self, point: Point):
         return Point(point.x + self.x, point.y + self.y)
 
     def get_vector_sum(self, vec):
@@ -255,7 +262,7 @@ class LineSegment:
 
     @classmethod
     def vector_line_segment(cls, point: Point, vec: Vector):
-        return cls(point, vec.move_point(point))
+        return cls(point, vec.get_moved_point(point))
 
     def get_length(self):
         return self.point_a.get_dist_from_point(self.point_b)

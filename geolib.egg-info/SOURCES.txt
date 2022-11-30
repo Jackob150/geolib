@@ -8,6 +8,7 @@ geolib.egg-info/entry_points.txt
 geolib.egg-info/top_level.txt
 src/__init__.py
 src/constans.py
+src/exceptions.py
 src/geolib.py
 utils/__init__.py
 utils/angles.py
