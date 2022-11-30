@@ -144,7 +144,7 @@ class Vector:
         return None
 
     def get_angle(self, vec):
-        if isinstance(vec, self.__class__):
+        if isinstance(vec, self.__class__) and self.get_length() and vec.get_length():
             return math.acos(self.get_scalar_product(vec) / (self.get_length() * vec.get_length()))
         return None
 
