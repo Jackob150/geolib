@@ -210,7 +210,7 @@ class Line:
         return False
 
     def get_direction(self):
-        return Vector(self.A, self.B)
+        return Vector(-self.B, self.A)
 
     def get_gradient(self):
         if self.B:
