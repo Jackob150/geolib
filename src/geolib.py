@@ -179,18 +179,30 @@ class Line:
     def __str__(self):
         return f"{self.A}x + {self.B}y + {self.C} = 0"
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            if abs(self.A * other.C - self.C * other.A) < epsilon and \
+               abs(self.B * other.C - self.C * other.B) < epsilon and \
+               abs(self.A * other.B - self.B * other.A) < epsilon:
+                return True
+        return False
+
     @classmethod
     def directional_line(cls, a: float, b: float):
         return cls(a, -1, b)
 
     @classmethod
     def two_points_line(cls, point_a: Point, point_b: Point):
-        return cls((point_b.y - point_a.y) / (point_b.x - point_a.x), -1, 
-                   -point_a.get_vector().get_outer_product(point_b.get_vector()) / (point_b.x - point_a.x))
+        if not point_a == point_b:
+            return cls(-(point_b.y - point_a.y), point_b.x - point_a.x, 
+                    point_a.x * point_b.y - point_a.y * point_b.x)
+        return None
 
     @classmethod
     def vector_line(cls, point: Point, vec: Vector):
-        return cls(vec.x, vec.y, -vec.get_scalar_product(point))
+        if vec.x or vec.y:
+            return cls(-vec.y, vec.x, point.get_vector().get_outer_product(vec))
+        return None
 
     def is_point_in_line(self, point: Point):
         if not self.A * point.x + self.B * point.y + self.C:
