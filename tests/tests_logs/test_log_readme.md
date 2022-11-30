@@ -1,0 +1,1 @@
+In this location pytest logs are stored
