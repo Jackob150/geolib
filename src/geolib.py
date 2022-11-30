@@ -205,7 +205,7 @@ class Line:
         return None
 
     def is_point_in_line(self, point: Point):
-        if not self.A * point.x + self.B * point.y + self.C:
+        if abs(self.A * point.x + self.B * point.y + self.C) < epsilon:
             return True
         return False
 

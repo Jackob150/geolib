@@ -21,3 +21,9 @@ def test_vector_line(test_manager, input, result):
     v = get_vector_from_input(input, 1)
     assert Line.vector_line(p, v) == get_line_from_input(result, 0)
     assert Line.vector_line(p, v.get_scaled_vector(-1)) == get_line_from_input(result, 0)
+
+@pytest.mark.parametrize("input, result", is_point_in_line_cases)
+def test_is_point_in_line(test_manager, input, result):
+    p = get_point_from_input(input, 0)
+    l = get_line_from_input(input, 1)
+    assert l.is_point_in_line(p) == result
