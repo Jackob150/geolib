@@ -13,7 +13,7 @@ class Point:
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return abs(self.x - other.x) < epsilon and (self.y - other.y) < epsilon
+            return abs(self.x - other.x) < epsilon and abs(self.y - other.y) < epsilon
         return False
 
     def get_dist_from_point(self, point):
@@ -271,15 +271,30 @@ class Line:
 
 class LineSegment:
     def __init__(self, point_a: Point, point_b: Point):
-        self.point_a = point_a
-        self.point_b = point_b
+        if not point_a == point_b:
+            self.point_a = point_a
+            self.point_b = point_b
+            self.correct = True
+        else:
+            self.correct = False
 
     def __str__(self):
         return f"{str(self.point_a)} --- {str(self.point_b)}"
 
+    def __bool__(self):
+        return self.correct
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return (self.point_a == other.point_a and self.point_b == other.point_b) or \
+                   (self.point_a == other.point_b and self.point_b == other.point_a)
+        return False
+
     @classmethod
     def vector_line_segment(cls, point: Point, vec: Vector):
-        return cls(point, vec.get_moved_point(point))
+        if vec.x or vec.y:
+            return cls(point, vec.get_moved_point(point))
+        return None
 
     def get_length(self):
         return self.point_a.get_dist_from_point(self.point_b)
