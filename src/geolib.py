@@ -1,7 +1,7 @@
 import math
 
 from src.constans import epsilon
-from src.exceptions import ZeroLengthVectorNormalized
+from src.exceptions import ZeroLengthVectorNormalized, PointOutsideLine
 
 class Point:
     def __init__(self, x: float, y: float):
@@ -228,11 +228,13 @@ class Line:
         return None
 
     def get_gradient_formula(self):
-        return self.get_gradient(), self.get_OY_intersection()
+        if self.B:
+            return self.get_gradient(), self.get_OY_intersection()
+        return None
 
     def get_line_intersection(self, line):
-        if denom := self.A * line.B - self.B * line.A:
-            return Point((self.B * line.C - self.C * line.B) / denom, (self.A * line.C - self.C * line.A) / denom)
+        if denom := self.B * line.A - self.A * line.B:
+            return Point((self.C * line.B - self.B * line.C) / denom, (self.A * line.C - self.C * line.A) / denom)
         return None
 
     def get_perp_line(self, point: Point):
@@ -252,16 +254,19 @@ class Line:
     def rotate_by_angle(self, angle: float, point: Point):
         if self.is_point_in_line(point):
             tmp_A = math.cos(angle) * self.A - math.sin(angle) * self.B
-            tmp_B = math.sin(angle) * self.A + math.cos(angle) * self.A
+            tmp_B = math.sin(angle) * self.A + math.cos(angle) * self.B
             self.A = tmp_A
             self.B = tmp_B
-            self.C = -self.get_direction().get_scalar_product(point)
+            self.C = -self.A * point.x - self.B * point.y
+        else:
+            raise PointOutsideLine(self, point)
 
     def get_rotated_by_angle(self, angle: float, point: Point):
         if self.is_point_in_line(point):
             return Line(math.cos(angle) * self.A - math.sin(angle) * self.B,
-                        math.sin(angle) * self.A + math.cos(angle) * self.A,
-                        -self.get_direction().get_scalar_product(point))
+                        math.sin(angle) * self.A + math.cos(angle) * self.B,
+                        -(math.cos(angle) * self.A - math.sin(angle) * self.B) * point.x \
+                        -(math.sin(angle) * self.A + math.cos(angle) * self.B) * point.y)
         return None
 
 class LineSegment:

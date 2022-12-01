@@ -34,6 +34,7 @@ def test_normalize(test_manager, input, result):
         v.normalize()
     except ZeroLengthVectorNormalized as e:
         logger.info(e)
+        assert v == get_vector_from_input(input, 0)
     else:
         assert v == get_vector_from_input(result, 0)
         assert abs(v.get_length() - result[1]) < epsilon
