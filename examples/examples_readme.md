@@ -1,1 +1,0 @@
-Examples shows how geolib can be used to solve complex problems.

@@ -6,9 +6,9 @@ setup(
     description='Analytical geometry library',
     author='Jackob150',
     author_email='jackob150@gmail.com',
-    packages=find_packages(include=['src', 'src.*', 'utils', 'utils.*']),
+    packages=find_packages(include=['src', 'src.*', 'utils', 'utils.*', 'examples', 'examples.*']),
     entry_points={
-        'console_scripts': ['geolib=main:main']
+        'console_scripts': ['geolib_example=examples.perp_tangent:run_example']
     },
     setup_requires=['pytest-runner'],
     tests_require=['pytest']
