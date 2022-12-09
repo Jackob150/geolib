@@ -424,6 +424,10 @@ class Circle:
     def __str__(self):
         return f"O(R = {self.radius}, C = {str(self.center)})"
 
+    @classmethod
+    def general_circle(cls, a: float, b: float, c: float):
+        return cls(math.sqrt((a / 2) ** 2 + (b / 2) ** 2 - c), Point(-a / 2, -b / 2))
+
     def get_diameter(self):
         return 2 * self.radius
 

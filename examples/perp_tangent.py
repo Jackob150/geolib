@@ -2,22 +2,15 @@ import math
 import time
 
 from src.geolib import *
-
-def load_from_user(prompt="", default=0, cast=float):
-    try:
-        in_data = cast(input(prompt))
-    except:
-        in_data = default
-    finally:
-        return in_data
+from utils.interface import load_from_user
 
 def run_example():
     """
     Example finding lines tangent to the circle and perpendicular to the given line.
     """
     # Load data
-    x = load_from_user("X coordinate of the circle: ", -2)
-    y = load_from_user("Y coordinate of the circle: ", -1)
+    x = load_from_user("X coordinate of the circle center: ", -2)
+    y = load_from_user("Y coordinate of the circle center: ", -1)
     r = load_from_user("Radius of the circle: ", 2*math.sqrt(10))
     print("Provide line coefficients in a form >> Ax + By + C = 0 <<")
     A = load_from_user("A: ", 3)
