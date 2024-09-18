@@ -8,6 +8,10 @@ def run_example():
     """
     Example finding lines tangent to the circle originating from the same point outside the circle.
     """
+    print(
+        "\nProvide the circle parameters and a point to find lines"
+        " tangent to the circle originating from given point.\n"
+    )
     # Load data
     x = load_from_user("X coordinate of the circle center: ", 0)
     y = load_from_user("Y coordinate of the circle center: ", 0)
@@ -34,6 +38,7 @@ def run_example():
         print(final_line_2)
     else:
         print("Given point inside the circle!")
+
 
 if __name__ == "__main__":
     run_example()
